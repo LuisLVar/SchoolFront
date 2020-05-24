@@ -1,0 +1,148 @@
+<br>
+<div *ngIf="verTodo">
+    <div class="row">
+        <div class="col-md-3"></div>        
+        <div class="col-md-4">
+            <div class="form-group">
+                <input (keyup)="filtrar($event)" type="text" class="form-control" placeholder="Buscar por: Nombre, Apellido o Identificación">
+            </div>            
+        </div>        
+        <div class="col-md-1">
+            <button class="btn btn-info" (click)="refrescarTabla()">Refrescar</button>
+        </div>
+        <div class="col-md-2">
+            <button (click)="nuevo()" class="btn btn-success">Nuevo Alumno</button>
+        </div>
+    </div>
+    <br>
+    <table class="table table-hover">
+        <thead>
+            <tr>                
+                <th>Identicación</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="filtro.length > 0">
+            <tr *ngFor="let v of filtro">                
+                <td>{{v.id_alumno}}</td>
+                <td>{{v.nombre}}</td>
+                <td>{{v.apellido}}</td>
+                <td>{{v.direccion}}</td>
+                <td>{{v.telefono}}</td>
+                <td>{{v.fecha_nacimiento}}</td>
+                <td>{{v.estado}}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="editarAlumno(v)">Editar</button>
+                    &nbsp;
+                    <button class="btn btn-danger btn-sm" (click)="eliminarAlumno(v)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="agregarEditar">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div *ngIf="agregar" class="col-md-4">
+            <div class="page-header">
+                <h2>Nuevo Alumno</h2>
+            </div>
+        </div>
+        <div *ngIf="editar" class="col-md-4">
+            <div class="page-header">
+                <h2>Editar Alumno</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input [(ngModel)]="nombre" type="text" class="form-control" placeholder="Nombre del alumno">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Apellido</label>
+                <input [(ngModel)]="apellido" type="text" class="form-control" placeholder="Apellido del alumno">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Dirección</label>
+                <input [(ngModel)]="direccion" type="text" class="form-control" placeholder="Dirección">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input [(ngModel)]="telefono" type="tel" class="form-control" placeholder="Teléfono">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Identificación</label>
+                <input [(ngModel)]="identificacion" type="text" class="form-control" placeholder="Identificación">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Fecha de nacimiento</label>                
+                <input [(ngModel)]="fecha_nacimiento" type="date" class="form-control"
+                    placeholder="Fecha de nacimiento">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Estado</label>
+                <input [(ngModel)]="estado" type="text" class="form-control" placeholder="Estado">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="agregar" class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary" (click)="guardarAlumno()">Guardar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-warning" (click)="cancelar()">Cancelar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" (click)="cancelar()">Regresar</button>
+        </div>
+    </div>
+
+    <div *ngIf="editar" class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary" (click)="guardarCambios()">Guardar Cambios</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-warning" (click)="cancelar()">Cancelar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" (click)="cancelar()">Regresar</button>
+        </div>
+    </div>
+</div>
