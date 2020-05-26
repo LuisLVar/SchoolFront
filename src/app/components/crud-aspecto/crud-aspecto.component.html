@@ -1,1 +1,93 @@
-<p>crud-aspecto works!</p>
+<br>
+<div *ngIf="verTodo">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <input (keyup)="filtrar($event)" type="text" class="form-control"
+                    placeholder="Buscar por: Nombre">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-info" (click)="refrescarTabla()">Refrescar</button>
+        </div>
+        <div class="col-md-2">
+            <button (click)="nuevo()" class="btn btn-success">Nuevo Aspecto</button>
+        </div>
+    </div>
+    <br>
+    <div class="row d-flex justify-content-center">        
+        <div class="col-md-6">
+            <table class="table table-hover" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="filtro.length > 0">
+                    <tr *ngFor="let v of filtro; let indice=index">
+                        <td>{{v.nombre}}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" (click)="editarAspecto(v)"><i class="fas fa-edit"></i></button>
+                            &nbsp;
+                            <button class="btn btn-danger btn-sm" (click)="eliminarAspecto(v)"><i class="far fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
+    </div>
+</div>
+
+<div *ngIf="agregarEditar">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div *ngIf="agregar" class="col-md-4">
+            <div class="page-header">
+                <h2>Nuevo Aspecto</h2>
+            </div>
+        </div>
+        <div *ngIf="editar" class="col-md-4">
+            <div class="page-header">
+                <h2>Editar Aspecto</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input [(ngModel)]="nombre" type="text" class="form-control" placeholder="Nombre del Aspecto">
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="agregar" class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary" (click)="guardarAspecto()">Guardar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-warning" (click)="cancelar()">Cancelar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" (click)="cancelar()">Regresar</button>
+        </div>
+    </div>
+
+    <div *ngIf="editar" class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary" (click)="guardarCambios()">Guardar Cambios</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-warning" (click)="cancelar()">Cancelar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" (click)="cancelar()">Regresar</button>
+        </div>
+    </div>
+</div>

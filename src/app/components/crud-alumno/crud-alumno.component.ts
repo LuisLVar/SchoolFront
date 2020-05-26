@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CRUDApagsService } from '../../services/crud-apags.service';
 
 @Component({
   selector: 'app-crud-alumno',
@@ -16,18 +17,19 @@ export class CrudAlumnoComponent implements OnInit {
 
   filtro=[];
 
-  constructor() {
+  constructor( protected conn:CRUDApagsService ) {
       this.filtro=this.datosTabla;
   }
 
   ngOnInit() {
+    
   }
 
   filtrar(event){
-    const valor = (event.target as HTMLInputElement).value;
+    const valor = ((event.target as HTMLInputElement).value).toLowerCase();
     this.filtro=this.datosTabla.filter((val)=>{
-      if((val.nombre+" "+val.apellido).search(valor)>=0 || val.id_alumno.search(valor)>=0
-        || val.fecha_nacimiento.search(valor)>=0){
+      if((val.nombre+" "+val.apellido).toLowerCase().search(valor)>=0 || val.id_alumno.toLowerCase().search(valor)>=0
+        || val.fecha_nacimiento.toLowerCase().search(valor)>=0){
         return val;
       }
     });
@@ -96,21 +98,11 @@ export class CrudAlumnoComponent implements OnInit {
       return;
     }
 
-    alert(`
-    ${this.alumno}\n
-    ${this.nombre}\n
-    ${this.apellido}\n
-    ${this.direccion}\n
-    ${this.telefono}\n
-    ${this.identificacion}\n
-    ${this.fecha_nacimiento}\n
-    ${this.estado}\n
-    `);
-
     this.datosTabla.push({alumno:this.alumno, nombre:this.nombre, apellido:this.apellido, direccion:this.direccion,
                           telefono:this.telefono, id_alumno:this.identificacion, fecha_nacimiento:this.fecha_nacimiento,
                           estado:this.estado});
 
+    alert("Alumno creado");
     this.limpiarCampos();
   }
 
@@ -161,6 +153,7 @@ export class CrudAlumnoComponent implements OnInit {
 
     alert("Se guardaron los cambios");
     this.limpiarCampos();   
+    this.verTabla();
   }
 
   cancelar(){

@@ -12,6 +12,7 @@ import { CrudGradoComponent } from './components/crud-grado/crud-grado.component
 import { CrudSeccionComponent } from './components/crud-seccion/crud-seccion.component';
 import { CrudAlumnoComponent } from './components/crud-alumno/crud-alumno.component';
 import { CrudAspectoComponent } from './components/crud-aspecto/crud-aspecto.component';
+import { CRUDApagsService } from './services/crud-apags.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { CrudAspectoComponent } from './components/crud-aspecto/crud-aspecto.com
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [CRUDApagsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

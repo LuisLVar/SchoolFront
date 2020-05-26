@@ -4,7 +4,7 @@
         <div class="col-md-3"></div>        
         <div class="col-md-4">
             <div class="form-group">
-                <input (keyup)="filtrar($event)" type="text" class="form-control" placeholder="Buscar por: Nombre, Apellido o Identificación">
+                <input (keyup)="filtrar($event)" type="text" class="form-control" placeholder="Buscar por: Nombre, Apellido, Identificación o Fecha">
             </div>            
         </div>        
         <div class="col-md-1">
@@ -38,9 +38,9 @@
                 <td>{{v.fecha_nacimiento}}</td>
                 <td>{{v.estado}}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm" (click)="editarAlumno(v)">Editar</button>
+                    <button class="btn btn-primary btn-sm" (click)="editarAlumno(v)"><i class="fas fa-edit"></i></button>
                     &nbsp;
-                    <button class="btn btn-danger btn-sm" (click)="eliminarAlumno(v)">Eliminar</button>
+                    <button class="btn btn-danger btn-sm" (click)="eliminarAlumno(v)"><i class="far fa-trash-alt"></i></button>
                 </td>
             </tr>
         </tbody>

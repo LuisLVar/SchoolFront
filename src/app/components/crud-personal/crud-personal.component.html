@@ -1,1 +1,174 @@
-<p>crud-personal works!</p>
+<br>
+<div *ngIf="verTodo">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <input (keyup)="filtrar($event)" type="text" class="form-control"
+                    placeholder="Buscar por: Nombre, Apellido o Identificación">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-info" (click)="refrescarTabla()">Refrescar</button>
+        </div>
+        <div class="col-md-2">
+            <button (click)="nuevo()" class="btn btn-success">Nuevo Personal</button>
+        </div>
+    </div>
+    <br>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Identicación</th>
+                <th>Estado</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="filtro.length > 0">
+            <tr *ngFor="let v of filtro">
+                <td>{{v.nombre}}</td>
+                <td>{{v.apellido}}</td>
+                <td>{{v.direccion}}</td>
+                <td>{{v.telefono}}</td>
+                <td>{{v.id_personal}}</td>
+                <td>{{v.estado}}</td>
+                <td *ngIf="v.tipo_personal==1">Director</td>
+                <td *ngIf="v.tipo_personal==2">Docente</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="editarPersonal(v)"><i class="fas fa-edit"></i></button>
+                    &nbsp;
+                    <button class="btn btn-danger btn-sm" (click)="eliminarPersonal(v)"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="agregarEditar">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div *ngIf="agregar" class="col-md-4">
+            <div class="page-header">
+                <h2>Nuevo Personal</h2>
+            </div>
+        </div>
+        <div *ngIf="editar" class="col-md-4">
+            <div class="page-header">
+                <h2>Editar Personal</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input [(ngModel)]="nombre" type="text" class="form-control" placeholder="Nombre del Personal">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Apellido</label>
+                <input [(ngModel)]="apellido" type="text" class="form-control" placeholder="Apellido del Personal">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Dirección</label>
+                <input [(ngModel)]="direccion" type="text" class="form-control" placeholder="Dirección">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input [(ngModel)]="telefono" type="tel" class="form-control" placeholder="Teléfono">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Identificación</label>
+                <input [(ngModel)]="identificacion" type="text" class="form-control" placeholder="Identificación">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Estado</label>
+                <input [(ngModel)]="estado" type="text" class="form-control" placeholder="Estado">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Usuario</label>
+                <input [(ngModel)]="usuario" type="text" class="form-control" placeholder="Usuario">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input [(ngModel)]="password" type="text" class="form-control" placeholder="Contraseña">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="btn-group">
+                <button type="menu" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Tipo de Personal <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li><button class="btn btn-default" (click)="tipo_personal=1">Director</button></li>
+                    <li><button class="btn btn-default" (click)="tipo_personal=2">Docente</button></li>
+                </ul>                
+            </div>
+            <label *ngIf="tipo_personal==1">&nbsp;&nbsp;&nbsp; <h6>Director</h6></label>
+            <label *ngIf="tipo_personal==2">&nbsp;&nbsp;&nbsp;<h6>Docente</h6></label>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="agregar" class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary" (click)="guardarPersonal()">Guardar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-warning" (click)="cancelar()">Cancelar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" (click)="cancelar()">Regresar</button>
+        </div>
+    </div>
+
+    <div *ngIf="editar" class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary" (click)="guardarCambios()">Guardar Cambios</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-warning" (click)="cancelar()">Cancelar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" (click)="cancelar()">Regresar</button>
+        </div>
+    </div>
+</div>
