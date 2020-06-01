@@ -59,6 +59,22 @@ export class ApiService {
   }
   public getBloque()
   {
-    return this.http.get(`${this.API_URI}/getBloque`);
+    return this.http.get(`${this.API_URI}/bloque`);
+  }
+  public getMateria()
+  {
+    return this.http.get(`${this.API_URI}/materia`);
+  }
+  public crearMateria(data:any)
+  {
+    return this.http.post(`${this.API_URI}/materia`, data);
+  }
+  public modificarMateria(data:any)
+  {
+    return this.http.put(`${this.API_URI}/materia`, data);
+  }
+  public eliminarMateria(data:any)
+  {
+    return this.http.delete(`${this.API_URI}/materia`, data);
   }
 }

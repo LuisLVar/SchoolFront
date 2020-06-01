@@ -15,15 +15,7 @@ export class BloqueComponent implements OnInit {
   constructor(private servicioHttp: ApiService) { }
 
   ngOnInit() {
-    //this.bloques = this.servicioHttp.getBloque();
-    this.bloques = [
-      {IDBLOQUE:1, NOMBRE:'Bloque1'},
-      {IDBLOQUE:2, NOMBRE:'Bloque2'},
-      {IDBLOQUE:3, NOMBRE:'Bloque3'},
-      {IDBLOQUE:4, NOMBRE:'Bloque4'},
-    ];
-    console.log(this.bloques)
-
+    this.bloques = this.servicioHttp.getBloque();
   }
 
   

@@ -9,6 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ModuloInscripcionComponent } from './components/modulo-inscripcion/modulo-inscripcion.component';
 import { BloqueComponent } from './components/bloque/bloque.component';
+import { MateriaComponent } from './components/materia/materia.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BloqueComponent } from './components/bloque/bloque.component';
     LoginComponent,
     NavbarComponent,
     ModuloInscripcionComponent,
-    BloqueComponent
+    BloqueComponent,
+    MateriaComponent
   ],
   imports: [
     BrowserModule,

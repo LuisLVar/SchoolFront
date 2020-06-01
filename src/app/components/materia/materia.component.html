@@ -1,0 +1,129 @@
+<app-navbar></app-navbar>
+<div class="container p-4">
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    CRUD MATERIAS
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card text-center">
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <h3>Crear Materia</h3>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <h4>Nombre de la Materia:</h4>
+                                        <hr>
+                                        <input name="name" [(ngModel)]="nombreMateria">
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <h4>Contenido de la Materia:</h4>
+                                        <hr>
+                                        <input name="cont" [(ngModel)]="contenidoMateria">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <a (click)="crearMateria()" class="btn btn-lg btn-success btn-block text-white">
+                            <i class="fas fa-plus"></i>
+                             Crear Materia
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <h3>Materias creadas</h3>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>NOMBRE</th>
+                                                    <th>CONTENIDO</th>
+                                                    <th>MODIFICAR</th>
+                                                    <th>ELIMINAR</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor = "let data of materias">
+                                                    <td>{{data.IDBLOQUE}}</td>
+                                                    <td>{{data.NOMBRE}}</td>
+                                                    <td>{{data.CONTENIDO}}</td>
+                                                    <td><input type="button" (click)="modificar(data)" class="btn btn-warning" value="Modificar"></td>
+                                                    <td><input type="button" (click)="eliminar(data)" class="btn btn-danger" value="Eliminar"></td>
+                                                </tr>
+                                            </tbody>
+                                            
+                                            
+                                        </table>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card text-center">
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <h3>Modificar Materia</h3>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <h4>ID de la Materia:</h4>
+                                        <hr>
+                                        <input name="id" [(ngModel)]="idMateria" readonly>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <h4>Nombre de la materia:</h4>
+                                        <hr>
+                                        <input name="name" [(ngModel)]="nombreMateriaMod">
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <h4>Contenido de la materia:</h4>
+                                        <hr>
+                                        <input name="cont" [(ngModel)]="contenidoMateriaMod">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <a (click)="modificarMateria()" class="btn btn-lg btn-success btn-block text-white">
+                            <i class="fas fa-plus"></i>
+                             Modificar Materia
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
