@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<div class="container p-4">
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    Inscripción de Alumnos
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card text-center">
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <h4>Alumno</h4>
+                                    </div>
+                                    <div class="row">
+                                        <select name="alumnos" [(ngModel)]="selectedValue">
+                                            <option [value]="item.IDALUMNO" *ngFor="let item of alumnos">{{item.ID_ALUMNO}} {{item.NOMBRE}} {{ITEM.APELLIDO}}</option>
+                                        </select>
+                                        {{selectedAlumno}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card text-center">
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <h4>Sección</h4>
+                                    </div>
+                                    <div class="row">
+                                        <select name="secciones" [(ngModel)]="selectedValue">
+                                            <option [value]="item.IDSECCION" *ngFor="let item of secciones">{{item.GRADO}} {{item.NOMBRE}}</option>
+                                        </select>
+                                        {{selectedSeccion}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <a (click)="inscribir()" class="btn btn-lg btn-success btn-block text-white">
+                            <i class="fas fa-address-card"></i>
+                             Inscribir alumno
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>

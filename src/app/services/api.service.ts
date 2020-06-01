@@ -32,4 +32,33 @@ export class ApiService {
   public removeUser() : void{
     localStorage.removeItem("currentuser");
   }
+
+  public getAlumno()
+  {
+    return this.http.get(`${this.API_URI}/getAlmuno`);
+  }
+  public getSeccion()
+  {
+    return this.http.get(`${this.API_URI}/getSeccion`);
+  }
+  public inscribir(data:any)
+  {
+    return this.http.post(`${this.API_URI}/inscribir`, data);
+  }
+  public crearBloque(data:any)
+  {
+    return this.http.post(`${this.API_URI}/bloque`, data);
+  }
+  public modificarBloque(data:any)
+  {
+    return this.http.put(`${this.API_URI}/bloque`, data);
+  }
+  public eliminarBloque(data:any)
+  {
+    return this.http.delete(`${this.API_URI}/bloque`, data);
+  }
+  public getBloque()
+  {
+    return this.http.get(`${this.API_URI}/getBloque`);
+  }
 }
