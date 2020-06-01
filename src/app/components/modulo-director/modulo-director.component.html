@@ -1,0 +1,159 @@
+<app-navbar></app-navbar>
+<div class="container p-4">
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    MODULO DIRECTOR
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <h3>Años que poseen datos</h3>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>AÑO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor = "let data of Years">
+                                                    <td>{{data.ANIO}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <h3>Grados por Año</h3>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>AÑO</th>
+                                                    <th>GRADO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor = "let data of Courses">
+                                                    <td>{{data.ANIO}}</td>
+                                                    <td>{{data.GRADO}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    
+                </div>
+
+                <div class="card-body">
+                    <h3>Asignar Sección por Grado</h3>
+                    <div class="row">
+                        
+                        <div class="col-md-6">
+                            <div class="card text-center">
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <select name="secciones" [(ngModel)]="seccion">
+                                            <option [value]="item.IDSECCION" *ngFor="let item of secciones">{{item.GRADO}} {{item.NOMBRE}}</option>
+                                        </select>
+                                    </div>
+                                
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card text-center">
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <select name="grados" [(ngModel)]="seccionGrado">
+                                            <option [value]="item.IDGRADO" *ngFor="let item of courses"> {{item.NOMBRE}}</option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <a (click)="asigSeccion()" class="btn btn-lg btn-success btn-block text-white">
+                            <i class="fas fa-plus"></i>
+                             Asignar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <h3>Asignar Materias por Grado</h3>
+                    <div class="row">
+                        
+                        <div class="col-md-6">
+                            <div class="card text-center">
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <select name="materias" [(ngModel)]="materia">
+                                            <option [value]="item.IDMATERIA" *ngFor="let item of materias">{{item.NOMBRE}}</option>
+                                        </select>
+                                    </div>
+                                
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card text-center">
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <select name="grados" [(ngModel)]="materiaGrado">
+                                            <option [value]="item.IDGRADO" *ngFor="let item of courses"> {{item.NOMBRE}}</option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <a (click)="asigMateria()" class="btn btn-lg btn-success btn-block text-white">
+                            <i class="fas fa-plus"></i>
+                             Asignar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>

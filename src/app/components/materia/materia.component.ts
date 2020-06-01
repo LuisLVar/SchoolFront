@@ -18,6 +18,7 @@ export class MateriaComponent implements OnInit {
   constructor(private servicioHttp: ApiService) { }
 
   ngOnInit() {
+    this.materias = this.servicioHttp.getMateria();
   }
 
   crearMateria()

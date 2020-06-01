@@ -20,7 +20,6 @@
                                         <select name="alumnos" [(ngModel)]="selectedValue">
                                             <option [value]="item.IDALUMNO" *ngFor="let item of alumnos">{{item.ID_ALUMNO}} {{item.NOMBRE}} {{ITEM.APELLIDO}}</option>
                                         </select>
-                                        {{selectedAlumno}}
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +35,6 @@
                                         <select name="secciones" [(ngModel)]="selectedValue">
                                             <option [value]="item.IDSECCION" *ngFor="let item of secciones">{{item.GRADO}} {{item.NOMBRE}}</option>
                                         </select>
-                                        {{selectedSeccion}}
                                     </div>
                                 </div>
                             </div>

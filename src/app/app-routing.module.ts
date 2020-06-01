@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ModuloInscripcionComponent } from './components/modulo-inscripcion/modulo-inscripcion.component';
 import { BloqueComponent } from './components/bloque/bloque.component';
 import { MateriaComponent } from './components/materia/materia.component';
+import { ModuloDirectorComponent } from './components/modulo-director/modulo-director.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'materias',
     component: MateriaComponent
+  },
+  {
+    path: 'director',
+    component: ModuloDirectorComponent
   },
   {
     path: "**",

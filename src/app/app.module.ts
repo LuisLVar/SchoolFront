@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuloInscripcionComponent } from './components/modulo-inscripcion/modulo-inscripcion.component';
 import { BloqueComponent } from './components/bloque/bloque.component';
 import { MateriaComponent } from './components/materia/materia.component';
+import { ModuloDirectorComponent } from './components/modulo-director/modulo-director.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MateriaComponent } from './components/materia/materia.component';
     NavbarComponent,
     ModuloInscripcionComponent,
     BloqueComponent,
-    MateriaComponent
+    MateriaComponent,
+    ModuloDirectorComponent
   ],
   imports: [
     BrowserModule,

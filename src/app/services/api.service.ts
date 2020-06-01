@@ -77,4 +77,20 @@ export class ApiService {
   {
     return this.http.delete(`${this.API_URI}/materia`, data);
   }
+  public getYears()
+  {
+    return this.http.get(`${this.API_URI}/getYears`);
+  }
+  public getCourses()
+  {
+    return this.http.get(`${this.API_URI}/getCourses`);
+  }
+  public asigSeccionGrado(data:any)
+  {
+    return this.http.post(`${this.API_URI}/asigSeccionGrado`,data);
+  }
+  public asigMateriaGrado(data:any)
+  {
+    return this.http.post(`${this.API_URI}/asigMateriaGrado`,data);
+  }
 }
