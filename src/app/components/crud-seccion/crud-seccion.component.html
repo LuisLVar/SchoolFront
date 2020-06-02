@@ -1,0 +1,279 @@
+<br>
+<div *ngIf="verTodo">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <input (keyup)="filtrar($event)" type="text" class="form-control" placeholder="Buscar por: Nombre, Grado, Docente o Ciclo">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-info" (click)="refrescarTabla()">Refrescar</button>
+        </div>
+        <div class="col-md-2">
+            <button (click)="nuevo()" class="btn btn-success">Nueva Sección</button>
+        </div>
+    </div>
+    <br>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <table class="table table-hover" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Grado</th>
+                        <th>Docente</th>
+                        <th>Ciclo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="filtro.length > 0">
+                    <tr *ngFor="let v of filtro; let indice=index">
+                        <td>{{v.nombre}}</td>
+                        <td>{{v.estado}}</td>
+                        <td>{{v.n_grado}}</td>
+                        <td>{{v.n_personal}}&nbsp;{{v.a_personal}}</td>
+                        <td>{{v.year}}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" (click)="editarSeccion(v)"><i class="fas fa-edit"></i></button>
+                            &nbsp;
+                            <button class="btn btn-danger btn-sm" (click)="eliminarSeccion(v)"><i class="far fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="agregarEditar">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div *ngIf="agregar" class="col-md-4">
+            <div class="page-header">
+                <h2>Nueva Sección</h2>
+            </div>
+        </div>
+        <div *ngIf="editar" class="col-md-4">
+            <div class="page-header">
+                <h2>Editar Sección</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input [(ngModel)]="nombre" type="text" class="form-control" placeholder="Nombre del Sección">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Estado</label>
+                <input [(ngModel)]="estado" type="text" class="form-control" placeholder="Nombre del Sección">
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-2">
+            <!-- MODAL PERSONAL -->
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">
+                Seleccionar Docente
+            </button>
+        </div>
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Seleccione al docente encargado de la sección</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input (keyup)="filtrarPersonal($event)" type="text" class="form-control"
+                                placeholder="Buscar por: Nombre">
+                        </div>
+                        <br>
+                        <table class="table table-hover" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="filtroPersonal.length > 0">
+                                <tr *ngFor="let v of filtroPersonal; let indice=index">
+                                    <td>{{v.nombre}}</td>
+                                    <td>{{v.apellido}}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"
+                                            (click)="personal=v"><i class="fas fa-check"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <!-- MODAL GRADOS -->
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal2">
+                Seleccionar Grado
+            </button>
+        </div>
+
+        <div class="modal" id="myModal2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Seleccione el grado a la que pertenece la sección</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input (keyup)="filtrarGrado($event)" type="text" class="form-control"
+                                placeholder="Buscar por: Nombre">
+                        </div>
+                        <br>
+                        <table class="table table-hover" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="filtroGrado.length > 0">
+                                <tr *ngFor="let v of filtroGrado; let indice=index">
+                                    <td>{{v.nombre}}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"
+                                            (click)="grado=v"><i class="fas fa-check"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <!-- MODAL CICLO -->
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal3">
+                Seleccionar Ciclo
+            </button>
+        </div>
+        <div class="modal" id="myModal3">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Seleccione el ciclo al que pertenece la sección</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input (keyup)="filtrarCiclo($event)" type="text" class="form-control"
+                                placeholder="Buscar por: Nombre">
+                        </div>
+                        <br>
+                        <table class="table table-hover" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="filtroCiclo.length > 0">
+                                <tr *ngFor="let v of filtroCiclo; let indice=index">
+                                    <td>{{v.year}}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"
+                                            (click)="ciclo=v"><i class="fas fa-check"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header"><h3>Detalles: </h3> <h6>Se guardará la sección con la siguiente información</h6> </div>
+                <div class="card-body">
+                    <p *ngIf="nombre"><b>Sección:</b>&nbsp;{{nombre}}</p>
+                    <p *ngIf="estado"><b>Estado:</b>&nbsp;{{estado}}</p>
+                    <p *ngIf="personal"><b>Docente:</b>&nbsp;{{personal.nombre}}&nbsp;{{personal.apellido}}</p>
+                    <p *ngIf="grado"><b>Grado:</b>&nbsp;{{grado.nombre}}</p>
+                    <p *ngIf="ciclo"><b>Ciclo:</b>&nbsp;{{ciclo.year}}</p>
+                </div>
+              </div>
+        </div>        
+    </div>
+    <br><br>
+    <div *ngIf="agregar" class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary" (click)="guardarSeccion()">Guardar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-warning" (click)="cancelar()">Cancelar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" (click)="cancelar()">Regresar</button>
+        </div>
+    </div>
+
+    <div *ngIf="editar" class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary" (click)="guardarCambios()">Guardar Cambios</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-warning" (click)="cancelar()">Cancelar</button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" (click)="cancelar()">Regresar</button>
+        </div>
+    </div>
+</div>

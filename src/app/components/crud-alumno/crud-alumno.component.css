@@ -1,0 +1,8 @@
+#divRelativo{
+    margin-top: 7%; 
+    position: relative;
+}
+
+#divAbsoluto{
+    position: absolute;
+}
