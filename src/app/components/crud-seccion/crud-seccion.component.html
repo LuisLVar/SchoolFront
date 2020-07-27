@@ -1,12 +1,31 @@
 <br>
 <div *ngIf="verTodo">
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-4">
+        <div class="col-md-2"></div>
+        <div class="col-md-1">
             <div class="form-group">
-                <input (keyup)="filtrar($event)" type="text" class="form-control" placeholder="Buscar por: Nombre, Grado, Docente o Ciclo">
+                <input [(ngModel)]="fSeccion" type="text" class="form-control" placeholder="Seccion">
             </div>
         </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <input [(ngModel)]="fDocente" class="form-control" placeholder="Docente">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <input [(ngModel)]="fGrado" type="text" class="form-control" placeholder="Grado">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <input [(ngModel)]="fCiclo" type="text" class="form-control" placeholder="Ciclo">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-primary" (click)="filtrar()">Buscar</button>
+        </div>
+
         <div class="col-md-1">
             <button class="btn btn-info" (click)="refrescarTabla()">Refrescar</button>
         </div>
@@ -32,13 +51,15 @@
                     <tr *ngFor="let v of filtro; let indice=index">
                         <td>{{v.nombre}}</td>
                         <td>{{v.estado}}</td>
-                        <td>{{v.n_grado}}</td>
-                        <td>{{v.n_personal}}&nbsp;{{v.a_personal}}</td>
-                        <td>{{v.year}}</td>
+                        <td>{{v.nombre_grado}}</td>
+                        <td>{{v.nombre_personal}}<!--&nbsp;{{v.a_personal}}--></td>
+                        <!--<td>{{v.year}}</td>-->
                         <td>
-                            <button class="btn btn-primary btn-sm" (click)="editarSeccion(v)"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-primary btn-sm" (click)="editarSeccion(v)"><i
+                                    class="fas fa-edit"></i></button>
                             &nbsp;
-                            <button class="btn btn-danger btn-sm" (click)="eliminarSeccion(v)"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn btn-danger btn-sm" (click)="eliminarSeccion(v)"><i
+                                    class="far fa-trash-alt"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -72,8 +93,25 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label>Estado</label>
-                <input [(ngModel)]="estado" type="text" class="form-control" placeholder="Nombre del Sección">
+                <label><b>Estado</b></label>
+                <div class="form-group">
+                    <div class="btn-group">    
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                            <div *ngIf="estado==1">
+                                Activo <span class="caret"></span>
+                            </div>
+    
+                            <div *ngIf="estado==2">
+                                Inactivo <span class="caret"></span>
+                            </div>
+                        </button>
+    
+                        <ul class="dropdown-menu" role="menu">
+                            <li><button type="button" class="btn" (click)="estado='1'">Activo</button></li>
+                            <li><button type="button" class="btn" (click)="estado='2'">Inactivo</button></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -116,7 +154,7 @@
                                     <td>{{v.apellido}}</td>
                                     <td>
                                         <button class="btn btn-primary btn-sm" data-dismiss="modal"
-                                            (click)="personal=v"><i class="fas fa-check"></i></button>
+                                            (click)="setPersonal(v)"><i class="fas fa-check"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -167,8 +205,8 @@
                                 <tr *ngFor="let v of filtroGrado; let indice=index">
                                     <td>{{v.nombre}}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"
-                                            (click)="grado=v"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal" (click)="setGrado(v)"><i
+                                                class="fas fa-check"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -218,8 +256,8 @@
                                 <tr *ngFor="let v of filtroCiclo; let indice=index">
                                     <td>{{v.year}}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"
-                                            (click)="ciclo=v"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal" (click)="setCiclo(v)"><i
+                                                class="fas fa-check"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -239,16 +277,20 @@
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header"><h3>Detalles: </h3> <h6>Se guardará la sección con la siguiente información</h6> </div>
+                <div class="card-header">
+                    <h3>Detalles: </h3>
+                    <h6>Se guardará la sección con la siguiente información</h6>
+                </div>
                 <div class="card-body">
                     <p *ngIf="nombre"><b>Sección:</b>&nbsp;{{nombre}}</p>
-                    <p *ngIf="estado"><b>Estado:</b>&nbsp;{{estado}}</p>
-                    <p *ngIf="personal"><b>Docente:</b>&nbsp;{{personal.nombre}}&nbsp;{{personal.apellido}}</p>
-                    <p *ngIf="grado"><b>Grado:</b>&nbsp;{{grado.nombre}}</p>
-                    <p *ngIf="ciclo"><b>Ciclo:</b>&nbsp;{{ciclo.year}}</p>
+                    <p *ngIf="estado==1"><b>Estado:</b>&nbsp;Activo</p>
+                    <p *ngIf="estado==2"><b>Estado:</b>&nbsp;Inactivo</p>
+                    <p *ngIf="nomPersonal"><b>Docente:</b>&nbsp;{{nomPersonal}}</p>
+                    <p *ngIf="nomGrado"><b>Grado:</b>&nbsp;{{nomGrado}}</p>
+                    <p *ngIf="nomCiclo"><b>Ciclo:</b>&nbsp;{{nomCiclo}}</p>
                 </div>
-              </div>
-        </div>        
+            </div>
+        </div>
     </div>
     <br><br>
     <div *ngIf="agregar" class="row">

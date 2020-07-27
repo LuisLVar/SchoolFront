@@ -6,12 +6,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class CRUDApagsService {
 
+  dir = "http://3.20.3.133:3010/api";
+
   constructor(protected http: HttpClient) { }
 
   /** PARA EL CRUD DE PERSONAL */
 
   getPersonal() {
-    return this.http.get('RUTA CONEXION');
+    return this.http.get(this.dir+"/getPersonal");
     /* 
     RESPUESTA:
     {
@@ -30,17 +32,16 @@ export class CRUDApagsService {
     */
   }
 
-  nuevoPersonal(nombre, apellido, direccion, telefono, id_personal, estado, escuela, tipo_personal, usuario, password) {
-    return this.http.post("RUTA CONEXION",
+  nuevoPersonal(nombre, apellido, direccion, telefono, estado, escuela, tipo_personal, usuario, password) {
+    return this.http.post(this.dir+"/crearPersonal",
       {
         nombre: nombre,
         apellido: apellido,
         direccion: direccion,
         telefono: telefono,
-        id_personal: id_personal,
         estado: estado,
-        escuela: escuela,
-        tipo_personal: tipo_personal,
+        ESCUELA_escuela: escuela,
+        TIPO_PERSONAL_tipo: tipo_personal,
         usuario: usuario,
         password: password
       }
@@ -51,10 +52,10 @@ export class CRUDApagsService {
      */
   }
 
-  borrarPersonal(personal) {
-    return this.http.post("RUTA CONEXION",
+  eliminarPersonal(personal) {
+    return this.http.post(this.dir+"/eliminarPersonal",
       {
-        personal: personal
+        id_personal: personal
       }
     );
     /**
@@ -62,18 +63,17 @@ export class CRUDApagsService {
      */
   }
 
-  actualizarPersonal(personal, nombre, apellido, direccion, telefono, id_personal, estado, escuela, tipo_personal, usuario, password) {
-    return this.http.post("RUTA CONEXION",
+  actualizarPersonal(personal, nombre, apellido, direccion, telefono, estado, escuela, tipo_personal, usuario, password) {
+    return this.http.post(this.dir+"/actualizarPersonal",
       {
-        personal: personal,
+        id_personal: personal,
         nombre: nombre,
         apellido: apellido,
         direccion: direccion,
         telefono: telefono,
-        id_personal: id_personal,
         estado: estado,
-        escuela: escuela,
-        tipo_personal: tipo_personal,
+        ESCUELA_escuela: escuela,
+        TIPO_PERSONAL_tipo: tipo_personal,
         usuario: usuario,
         password: password
       }
@@ -89,7 +89,7 @@ export class CRUDApagsService {
   /**PARA LOS GRADOS */
 
   getGrados() {
-    return this.http.get("RUTA CONEXION");
+    return this.http.get(this.dir+"/getGrados");
     /**
      * RESPUESTA:
      * {
@@ -103,16 +103,14 @@ export class CRUDApagsService {
   }
 
   existeElGrado(nombre) {
-    let params = new HttpParams();
-    params.set("nombre", nombre);
-    return this.http.get('RUTA CONEXION', { params });
+    return this.http.post(this.dir+'/existeGrado', { nombre:nombre });
     /**
      * RESPUESTA: true | false
      */
   }
 
   nuevoGrado(nombre) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/crearGrado",
       {
         nombre: nombre
       }
@@ -124,7 +122,7 @@ export class CRUDApagsService {
   }
 
   borrarGrado(grado, nombre) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/eliminarGrado",
       {
         grado: grado,
         nombre: nombre
@@ -136,7 +134,7 @@ export class CRUDApagsService {
   }
 
   actualizarGrado(grado, nombre) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/actualizarGrado",
       {
         grado: grado,
         nombre: nombre
@@ -152,16 +150,16 @@ export class CRUDApagsService {
 
   /**PARA EL CRUD DE ASPECTOS */
   existeElAspecto(nombre) {
-    let params = new HttpParams();
-    params.set("nombre", nombre);
-    return this.http.get('RUTA CONEXION', { params });
+    return this.http.post(this.dir+'/existeAspecto',{
+      nombre:nombre
+    });
     /**
      * RESPUESTA: true | false
      */
   }
 
   getAspectos() {
-    return this.http.get('RUTA CONEXION');
+    return this.http.get(this.dir+"/getAspectos");
 
     /**
      * RESPUESTA: TODOS LOS ASPECTOS
@@ -178,7 +176,7 @@ export class CRUDApagsService {
   }
 
   nuevoAspecto(nombre) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/crearAspecto",
       {
         nombre: nombre
       }
@@ -190,9 +188,9 @@ export class CRUDApagsService {
   }
 
   borrarAspecto(id, nombre) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/eliminarAspecto",
       {
-        id: id,
+        aspecto: id,
         nombre: nombre
       }
     );
@@ -202,9 +200,9 @@ export class CRUDApagsService {
   }
 
   actualizarAspecto(id, nombre) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/actualizarAspecto",
       {
-        id: id,
+        aspecto: id,
         nombre: nombre
       }
     );
@@ -218,12 +216,12 @@ export class CRUDApagsService {
 
 
   /**PARA EL CRUD DE ESTUDIANTE */
-  existeElEstudiante(nombre, apellido, id_alumno) {
-    let params = new HttpParams();
-    params.set("nombre", nombre);
-    params.set("apellido", apellido);
-    params.set("id_alumno", id_alumno);
-    return this.http.get('RUTA CONEXION', { params });
+  existeElEstudiante(nombre, apellido, idalumno) {
+    return this.http.post(this.dir+'/existeAlumno', {
+      nombre:nombre,
+      apellido:apellido,
+      idalumno:idalumno
+    });
 
     /**
      * RESPUESTA: true | false
@@ -231,7 +229,7 @@ export class CRUDApagsService {
   }
 
   getEstudiantes() {
-    return this.http.get('RUTA CONEXION');
+    return this.http.get(this.dir+"/getAlumnos");
 
     /**
      * RESPUESTA: TODOS LOS ESTUDIANTES
@@ -255,13 +253,13 @@ export class CRUDApagsService {
   }
 
   nuevoEstudiante(nombre, apellido, direccion, telefono, id_alumno, encargado, fecha_nacimiento, estado) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/crearAlumno",
       {
         nombre: nombre,
         apellido: apellido,
         direccion: direccion,
         telefono: telefono,
-        id_alumno: id_alumno,
+        cui: id_alumno,
         encargado: encargado,
         fecha_nacimiento: fecha_nacimiento,
         estado: estado
@@ -273,10 +271,9 @@ export class CRUDApagsService {
      */
   }
 
-  borrarEstudiante(alumno, id_alumno) {
-    return this.http.post("RUTA CONEXION",
+  borrarEstudiante(id_alumno) {
+    return this.http.post(this.dir+"/eliminarAlumno",
       {
-        alumno: alumno,
         id_alumno: id_alumno
       }
     );
@@ -287,14 +284,14 @@ export class CRUDApagsService {
   }
 
   actualizarEstudiante(alumno, nombre, apellido, direccion, telefono, id_alumno, encargado, fecha_nacimiento, estado) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/actualizarAlumno",
       {
-        alumno: alumno,
+        id_alumno: alumno,
         nombre: nombre,
         apellido: apellido,
         direccion: direccion,
         telefono: telefono,
-        id_alumno: id_alumno,
+        cui: id_alumno,
         encargado: encargado,
         fecha_nacimiento: fecha_nacimiento,
         estado: estado
@@ -311,18 +308,15 @@ export class CRUDApagsService {
 
   /** PARA EL CRUD DE SECCIONES */
 
-  existeLaSeccion(nombre, grado) {
-    let params = new HttpParams();
-    params.set("nombre", nombre);
-    params.set("grado", grado);
-    return this.http.get('RUTA CONEXION', { params });
+  existeLaSeccion(nombre) {
+    return this.http.post(this.dir+"/existeSeccion", { nombre:nombre });
     /**
      * RESPUESTA: true | false
      */
   }
 
   getTodasLasSecciones() {
-    return this.http.get('RUTA CONEXION');
+    return this.http.get(this.dir+"/getSecciones");
     /* 
       RESPUESTA:
       {
@@ -337,13 +331,13 @@ export class CRUDApagsService {
   }
 
   nuevaSeccion(nombre, estado, grado, personal, ciclo) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/crearSeccion",
       {
         nombre: nombre,
         estado: estado,
-        grado: grado,
-        personal: personal,
-        ciclo: ciclo
+        GRADO_grado: grado,
+        PERSONAL_personal: personal,
+        CICLO_ciclo: ciclo
       }
     );
 
@@ -353,7 +347,7 @@ export class CRUDApagsService {
   }
 
   borrarSeccion(seccion) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/eliminarSeccion",
       {
         seccion: seccion
       }
@@ -364,19 +358,23 @@ export class CRUDApagsService {
   }
 
   actualizarSeccion(seccion, nombre, estado, grado, personal, ciclo) {
-    return this.http.post("RUTA CONEXION",
+    return this.http.post(this.dir+"/actualizarSeccion",
       {
         seccion: seccion,
         nombre: nombre,
         estado: estado,
-        grado: grado,
-        personal: personal,
-        ciclo: ciclo
+        GRADO_grado: grado,
+        PERSONAL_personal: personal,
+        CICLO_ciclo: ciclo
       }
     );
     /**
      * RESPUESTA: texto con errores o exito
      */
+  }
+
+  getCiclos(){
+    return this.http.get(this.dir+"/getCiclos");
   }
 
 }

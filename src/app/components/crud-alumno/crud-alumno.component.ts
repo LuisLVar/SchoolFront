@@ -8,157 +8,219 @@ import { CRUDApagsService } from '../../services/crud-apags.service';
 })
 export class CrudAlumnoComponent implements OnInit {
 
-  datosTabla=[
-    {alumno:"1", nombre:"Nombre 1", apellido:"Apellido 1", direccion:"direccion 1", telefono:"1111", id_alumno:"111AAA", fecha_nacimiento:"2020-01-01", estado:"A"},
-    {alumno:"2", nombre:"Nombre 2", apellido:"Apellido 2", direccion:"direccion 2", telefono:"2222", id_alumno:"222BBB", fecha_nacimiento:"2020-02-02", estado:"B"},
-    {alumno:"3", nombre:"Nombre 3", apellido:"Apellido 3", direccion:"direccion 3", telefono:"3333", id_alumno:"333CCC", fecha_nacimiento:"2020-03-03", estado:"C"},
-    {alumno:"4", nombre:"Nombre 4", apellido:"Apellido 4", direccion:"direccion 4", telefono:"4444", id_alumno:"444DDD", fecha_nacimiento:"2020-04-04", estado:"D"}
-  ];
+  datosTabla = [];
 
-  filtro=[];
+  filtro = [];
 
-  constructor( protected conn:CRUDApagsService ) {
-      this.filtro=this.datosTabla;
+  constructor(protected conn: CRUDApagsService) {
+    this.filtro = this.datosTabla;
   }
 
   ngOnInit() {
-    
+    this.refrescarTabla()
   }
 
-  filtrar(event){
+  refrescarTabla() {
+    let res;
+    this.conn.getEstudiantes().subscribe(d => res = d, err => this.lanzarErr("Error al obtener los estudiantes", err), () => {
+      this.datosTabla = res;
+      this.filtro = this.datosTabla;
+      for (let i = 0; i < this.datosTabla.length; i++) {
+        let mm = this.datosTabla[i];
+        mm.fecha_nacimiento = String(mm.fecha_nacimiento).substring(0, 10);
+      }
+    });
+  }
+
+  filtrar(event) {
     const valor = ((event.target as HTMLInputElement).value).toLowerCase();
-    this.filtro=this.datosTabla.filter((val)=>{
-      if((val.nombre+" "+val.apellido).toLowerCase().search(valor)>=0 || val.id_alumno.toLowerCase().search(valor)>=0
-        || val.fecha_nacimiento.toLowerCase().search(valor)>=0){
+    this.filtro = this.datosTabla.filter((val) => {
+      if ((val.nombre + " " + val.apellido).toLowerCase().search(valor) >= 0 || String(val.cui).toLowerCase().search(valor) >= 0
+        || val.fecha_nacimiento.toLowerCase().search(valor) >= 0) {
         return val;
       }
     });
   }
 
-  refrescarTabla(){
-    //MANDAR A LLAMAR LA CONSULTA
+
+
+  verTodo = true;
+  agregarEditar = false;
+  agregar = false;
+  editar = false;
+
+
+  alumno = "";
+  nombre = "";
+  apellido = "";
+  direccion = "";
+  telefono = "";
+  identificacion = "";
+  encargado = "";
+  fecha_nacimiento = "";
+  estado = "1";
+
+  verTabla() {
+    this.verTodo = true;
+    this.agregarEditar = false;
+    this.agregar = false;
+    this.editar = false;
   }
 
-  verTodo=true;
-  agregarEditar=false;
-  agregar=false;
-  editar=false;
-
-
-  alumno="";
-  nombre="";
-  apellido="";
-  direccion="";
-  telefono="";
-  identificacion="";
-  fecha_nacimiento="";
-  estado="";
-
-  verTabla(){
-    this.verTodo=true;
-    this.agregarEditar=false;
-    this.agregar=false;
-    this.editar=false;
+  nuevo() {
+    this.verTodo = false;
+    this.agregarEditar = true;
+    this.agregar = true;
+    this.editar = false;
   }
 
-  nuevo(){
-    this.verTodo=false;
-    this.agregarEditar=true;
-    this.agregar=true;
-    this.editar=false;
+  edicion() {
+    this.verTodo = false;
+    this.agregarEditar = true;
+    this.agregar = false;
+    this.editar = true;
   }
 
-  edicion(){
-    this.verTodo=false;
-    this.agregarEditar=true;
-    this.agregar=false;
-    this.editar=true;
+  limpiarCampos() {
+    this.alumno = "";
+    this.nombre = "";
+    this.apellido = "";
+    this.direccion = "";
+    this.telefono = "";
+    this.identificacion = "";
+    this.encargado = "";
+    this.fecha_nacimiento = "";
+    this.estado = "1";
+    this.alumnoEnEdicion = null;
   }
 
-  limpiarCampos(){
-    this.alumno="";
-    this.nombre="";
-    this.apellido="";
-    this.direccion="";
-    this.telefono="";
-    this.identificacion="";
-    this.fecha_nacimiento="";
-    this.estado="";
-    this.alumnoEnEdicion=null;
-  }
-
-  guardarAlumno(){
-    if(this.nombre.length==0 || this.apellido.length==0){
+  guardarAlumno() {
+    if (this.nombre.length == 0 || this.apellido.length == 0) {
       alert("El nombre y apellido del alumno son obligatorios");
       return;
     }
 
-    if(this.estado.length>1){
+    if (this.estado.length > 1) {
       alert("El estado no puede tener más de un carácter");
       return;
     }
 
-    this.datosTabla.push({alumno:this.alumno, nombre:this.nombre, apellido:this.apellido, direccion:this.direccion,
-                          telefono:this.telefono, id_alumno:this.identificacion, fecha_nacimiento:this.fecha_nacimiento,
-                          estado:this.estado});
+    if (this.fecha_nacimiento.length == 0) {
+      alert("Ingrese la fecha de nacimiento")
+      return;
+    }
 
-    alert("Alumno creado");
-    this.limpiarCampos();
+    if (this.identificacion.length == 0) {
+      alert("Ingrese la identificacion del alumno")
+      return;
+    }
+
+    let arrEst;
+    this.conn.getEstudiantes().subscribe(d => arrEst = d, err => this.lanzarErr("Error al obtener los estudiantes", err), () => {
+
+      let arrEst = this.datosTabla.filter((val) => {
+        if (String(val.cui).toLowerCase().trim().search(this.identificacion.toLowerCase().trim()) >= 0) {
+          return val;
+        }
+      });
+
+      if (arrEst.length > 0) {
+        alert("El id del alumno ya esta registrado");
+        this.refrescarTabla();
+      } else {
+        let dat;
+        this.conn.nuevoEstudiante(this.nombre, this.apellido, this.direccion, this.telefono, this.identificacion, this.encargado, this.fecha_nacimiento, this.estado)
+          .subscribe(d => dat = d, err => this.lanzarErr("Error al crear un nuevo alumno", err), () => {
+            alert("Alumno creado")
+            this.refrescarTabla();
+            this.limpiarCampos();
+          })
+      }
+    });
   }
 
-  eliminarAlumno(obj){
-    if(confirm("¿Desea eliminar al alumno?")){
-      let index = this.datosTabla.indexOf(obj);
-      this.datosTabla.splice(index, 1);
-      this.filtro=this.datosTabla;
-      alert("Se eliminó el alumno");
+  eliminarAlumno(obj) {
+    if (confirm("¿Desea eliminar al alumno?")) {
+      let dat;
+      this.conn.borrarEstudiante(obj.id_alumno).subscribe(d => dat = d, err => this.lanzarErr("Error al eliminar al estudiante", err), () => {
+        this.refrescarTabla();
+        alert("¡Listo!, el estudiante paso a un estado eliminado");
+      });
     }
   }
 
-  alumnoEnEdicion=null;
+  alumnoEnEdicion = null;
 
-  editarAlumno(obj){
-    this.alumno=obj.alumno;
-    this.nombre=obj.nombre;
-    this.apellido=obj.apellido;
-    this.direccion=obj.direccion;
-    this.telefono=obj.telefono;
-    this.identificacion=obj.id_alumno;
-    this.fecha_nacimiento=obj.fecha_nacimiento;
-    this.estado=obj.estado;
-    this.alumnoEnEdicion=obj;
+  editarAlumno(obj) {
+    this.alumno = obj.id_alumno;
+    this.nombre = obj.nombre;
+    this.apellido = obj.apellido;
+    this.direccion = obj.direccion;
+    this.telefono = obj.telefono;
+    this.identificacion = obj.cui;
+    this.encargado = obj.encargado;
+    this.fecha_nacimiento = obj.fecha_nacimiento;
+    this.estado = obj.estado;
+    this.alumnoEnEdicion = obj;
     this.edicion();
   }
 
-  guardarCambios(){
-    if(this.nombre.length==0 || this.apellido.length==0){
+  guardarCambios() {
+    if (this.nombre.length == 0 || this.apellido.length == 0) {
       alert("El nombre y apellido del alumno son obligatorios");
       return;
     }
 
-    if(this.estado.length>1){
+    if (this.estado.length > 1) {
       alert("El estado no puede tener más de un carácter");
       return;
     }
 
-    this.alumnoEnEdicion.alumno=this.alumno;
-    this.alumnoEnEdicion.nombre=this.nombre;
-    this.alumnoEnEdicion.apellido=this.apellido;
-    this.alumnoEnEdicion.direccion=this.direccion;
-    this.alumnoEnEdicion.telefono=this.telefono;
-    this.alumnoEnEdicion.id_alumno=this.identificacion;
-    this.alumnoEnEdicion.fecha_nacimiento=this.fecha_nacimiento;
-    this.alumnoEnEdicion.estado=this.estado;
-    this.alumnoEnEdicion.alumnoEnEdicion=this;
+    if (this.fecha_nacimiento.length == 0) {
+      alert("Ingrese la fecha de nacimiento")
+      return;
+    }
 
-    alert("Se guardaron los cambios");
-    this.limpiarCampos();   
+    if (this.identificacion.length == 0) {
+      alert("Ingrese la identificacion del alumno")
+      return;
+    }
+
+    let arrEst;
+    this.conn.getEstudiantes().subscribe(d => arrEst = d, err => this.lanzarErr("Error al obtener los estudiantes", err), () => {
+
+      let arrEst = this.datosTabla.filter((val) => {
+        if (String(val.cui).toLowerCase().trim().search(this.identificacion.toLowerCase().trim()) >= 0) {
+          return val;
+        }
+      });
+
+      if (arrEst.length > 0) {
+        alert("El id del alumno ya esta registrado");
+        this.refrescarTabla();
+      } else {
+        let dat;
+        this.conn.actualizarEstudiante(this.alumno, this.nombre, this.apellido, this.direccion, this.telefono, this.identificacion, this.encargado, this.fecha_nacimiento, this.estado)
+          .subscribe(d => dat = d, err => this.lanzarErr("Error al actualizar el alumno", err), () => {
+            this.refrescarTabla();
+            alert("Se guardaron los cambios");
+            this.limpiarCampos();
+            this.verTabla();
+          });
+      }
+    });
+
+
+  }
+
+  cancelar() {
+    this.limpiarCampos();
     this.verTabla();
   }
 
-  cancelar(){
-    this.limpiarCampos();
-    this.verTabla();
+  lanzarErr(msg, err) {
+    alert(msg + "\n-- MAS INFORMACIÓN: Ver la consola ---\n");
+    console.log(err);
   }
 
 }

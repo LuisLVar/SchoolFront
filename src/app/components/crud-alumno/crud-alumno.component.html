@@ -1,12 +1,13 @@
 <br>
 <div *ngIf="verTodo">
     <div class="row">
-        <div class="col-md-3"></div>        
+        <div class="col-md-3"></div>
         <div class="col-md-4">
             <div class="form-group">
-                <input (keyup)="filtrar($event)" type="text" class="form-control" placeholder="Buscar por: Nombre, Apellido, Identificación o Fecha">
-            </div>            
-        </div>        
+                <input (keyup)="filtrar($event)" type="text" class="form-control"
+                    placeholder="Buscar por: Nombre, Apellido, Identificación o Fecha">
+            </div>
+        </div>
         <div class="col-md-1">
             <button class="btn btn-info" (click)="refrescarTabla()">Refrescar</button>
         </div>
@@ -17,30 +18,36 @@
     <br>
     <table class="table table-hover">
         <thead>
-            <tr>                
-                <th>Identicación</th>
+            <tr>
+                <th>Id</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
                 <th>Fecha</th>
+                <th>Encargado</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody *ngIf="filtro.length > 0">
-            <tr *ngFor="let v of filtro">                
-                <td>{{v.id_alumno}}</td>
+            <tr *ngFor="let v of filtro">
+                <td>{{v.cui}}</td>
                 <td>{{v.nombre}}</td>
                 <td>{{v.apellido}}</td>
                 <td>{{v.direccion}}</td>
                 <td>{{v.telefono}}</td>
                 <td>{{v.fecha_nacimiento}}</td>
-                <td>{{v.estado}}</td>
+                <td>{{v.encargado}}</td>
+                <td *ngIf="v.estado==1" class="table-success">Activo</td>
+                <td *ngIf="v.estado==2" class="table-secondary">Inactivo</td>
+                <td *ngIf="v.estado==0" class="table-danger">Eliminado</td>
                 <td>
-                    <button class="btn btn-primary btn-sm" (click)="editarAlumno(v)"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-primary btn-sm" (click)="editarAlumno(v)"><i
+                            class="fas fa-edit"></i></button>
                     &nbsp;
-                    <button class="btn btn-danger btn-sm" (click)="eliminarAlumno(v)"><i class="far fa-trash-alt"></i></button>
+                    <button *ngIf="v.estado!=0" class="btn btn-danger btn-sm" (click)="eliminarAlumno(v)"><i
+                            class="far fa-trash-alt"></i></button>
                 </td>
             </tr>
         </tbody>
@@ -104,7 +111,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label>Fecha de nacimiento</label>                
+                <label>Fecha de nacimiento</label>
                 <input [(ngModel)]="fecha_nacimiento" type="date" class="form-control"
                     placeholder="Fecha de nacimiento">
             </div>
@@ -115,8 +122,36 @@
         <div class="col-md-3"></div>
         <div class="col-md-3">
             <div class="form-group">
-                <label>Estado</label>
-                <input [(ngModel)]="estado" type="text" class="form-control" placeholder="Estado">
+                <label><b>Estado</b></label>
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-primary btn-default dropdown-toggle" data-toggle="dropdown">
+                            <div *ngIf="estado==1">
+                                Activo <span class="caret"></span>
+                            </div>
+    
+                            <div *ngIf="estado==2">
+                                Inactivo <span class="caret"></span>
+                            </div>
+    
+                            <div *ngIf="estado==0">
+                                Eliminado <span class="caret"></span>
+                            </div>
+                        </button>
+    
+                        <ul class="dropdown-menu" role="menu">
+                            <li><button type="button" class="btn" (click)="estado='1'">Activo</button></li>
+                            <li><button type="button" class="btn" (click)="estado='2'">Inactivo</button></li>
+                            <li><button type="button" class="btn" (click)="estado='0'">Eliminado</button></li>
+                        </ul>
+                    </div>
+                </div>                
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Encargado</label>
+                <input [(ngModel)]="encargado" type="text" class="form-control" placeholder="Encargado">
             </div>
         </div>
     </div>
