@@ -77,16 +77,7 @@ export class CrudSeccionComponent implements OnInit {
       this.filtroCiclo = this.datosTablaCiclo;
       //console.log(res)
     });
-  }
-
-  filtrarPersonal(event) {
-    const valor = (event.target as HTMLInputElement).value;
-    this.filtroPersonal = this.datosTablaPersonal.filter((val) => {
-      if ((val.nombre + " " + val.apellido).toLowerCase().search(valor.toLowerCase()) >= 0) {
-        return val;
-      }
-    });
-  }
+  } 
 
   fSeccion = ""; fDocente = ""; fGrado = ""; fCiclo = "";
 
@@ -125,6 +116,15 @@ export class CrudSeccionComponent implements OnInit {
     }
   }
 
+  filtrarPersonal(event) {
+    const valor = (event.target as HTMLInputElement).value;
+    this.filtroPersonal = this.datosTablaPersonal.filter((val) => {
+      if ((val.nombre + " " + val.apellido).toLowerCase().search(valor.toLowerCase()) >= 0) {
+        return val;
+      }
+    });
+  }
+
   filtrarGrado(event) {
     const valor = (event.target as HTMLInputElement).value;
     this.filtroGrado = this.datosTablaGrados.filter((val) => {
@@ -143,14 +143,14 @@ export class CrudSeccionComponent implements OnInit {
     });
   }
 
-
+// MANEJO DE LAS VISTAS
 
   verTodo = true;
   agregarEditar = false;
   agregar = false;
   editar = false;
 
-
+// MANEJO DE INFORMACION DE LOS FORMULARIOS Y LA API
   seccion = "";
   nombre = "";
   estado = "1";
@@ -163,6 +163,7 @@ export class CrudSeccionComponent implements OnInit {
   nomGrado = "";
   nomCiclo = "";
 
+  //MANEJO DE ID CUANDO SE SELECCIONA GRADO, PERSONAL, CICLO
   setPersonal(v) {
     this.codPersonal = v.id_personal;
     this.nomPersonal = v.nombre

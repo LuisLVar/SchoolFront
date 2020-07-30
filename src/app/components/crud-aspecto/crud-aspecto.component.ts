@@ -41,12 +41,14 @@ export class CrudAspectoComponent implements OnInit {
     });
   }
 
+  
+// MANEJO DE LAS VISTAS
   verTodo = true;
   agregarEditar = false;
   agregar = false;
   editar = false;
 
-
+// MANEJO DE INFORMACION DE LOS FORMULARIOS Y LA API
   aspecto = "";
   nombre = "";
 

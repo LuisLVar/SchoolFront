@@ -45,12 +45,14 @@ export class CrudPersonalComponent implements OnInit {
     });
   }
 
+    //MANEJO DE LA INTERFAZ
   verTodo = true;
   agregarEditar = false;
   agregar = false;
   editar = false;
 
 
+  //VARIABLES QUE CON LAS QUE SE INTERACTUA EN EL FORMULARIO Y CONEXION A LA API
   personal = "";
   nombre = "";
   apellido = "";

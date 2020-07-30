@@ -43,13 +43,13 @@ export class CrudAlumnoComponent implements OnInit {
   }
 
 
-
+// MANEJO DE LAS VISTAS
   verTodo = true;
   agregarEditar = false;
   agregar = false;
   editar = false;
 
-
+// MANEJO DE INFORMACION DE LOS FORMULARIOS Y LA API
   alumno = "";
   nombre = "";
   apellido = "";
