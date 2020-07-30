@@ -5,6 +5,11 @@ import { ModuloInscripcionComponent } from './components/modulo-inscripcion/modu
 import { BloqueComponent } from './components/bloque/bloque.component';
 import { MateriaComponent } from './components/materia/materia.component';
 import { ModuloDirectorComponent } from './components/modulo-director/modulo-director.component';
+import { CrudAlumnoComponent } from './components/crud-alumno/crud-alumno.component';
+import { CrudPersonalComponent } from './components/crud-personal/crud-personal.component';
+import { CrudGradoComponent } from './components/crud-grado/crud-grado.component';
+import { CrudSeccionComponent } from './components/crud-seccion/crud-seccion.component';
+import { CrudAspectoComponent } from './components/crud-aspecto/crud-aspecto.component';
 
 
 const routes: Routes = [
@@ -33,6 +38,32 @@ const routes: Routes = [
     path: 'director',
     component: ModuloDirectorComponent
   },
+
+  //------------------------------------------------------
+
+  {
+    path: 'crudAlumnos',
+    component: CrudAlumnoComponent
+  },
+  {
+    path: 'crudPersonal',
+    component: CrudPersonalComponent
+  },
+  {
+    path: 'crudGrados',
+    component: CrudGradoComponent
+  },
+  {
+    path: 'crudSeccion',
+    component: CrudSeccionComponent
+  },
+  {
+    path: 'crudAspectos',
+    component: CrudAspectoComponent
+  },
+
+  //------------------------------------------------------
+
   {
     path: "**",
     redirectTo: '/login',

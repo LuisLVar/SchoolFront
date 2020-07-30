@@ -11,6 +11,12 @@ import { ModuloInscripcionComponent } from './components/modulo-inscripcion/modu
 import { BloqueComponent } from './components/bloque/bloque.component';
 import { MateriaComponent } from './components/materia/materia.component';
 import { ModuloDirectorComponent } from './components/modulo-director/modulo-director.component';
+import { CrudPersonalComponent } from './components/crud-personal/crud-personal.component';
+import { CrudGradoComponent } from './components/crud-grado/crud-grado.component';
+import { CrudSeccionComponent } from './components/crud-seccion/crud-seccion.component';
+import { CrudAlumnoComponent } from './components/crud-alumno/crud-alumno.component';
+import { CrudAspectoComponent } from './components/crud-aspecto/crud-aspecto.component';
+import { CRUDApagsService } from './services/crud-apags.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +26,12 @@ import { ModuloDirectorComponent } from './components/modulo-director/modulo-dir
     ModuloInscripcionComponent,
     BloqueComponent,
     MateriaComponent,
-    ModuloDirectorComponent
+    ModuloDirectorComponent,
+    CrudPersonalComponent,
+    CrudGradoComponent,
+    CrudSeccionComponent,
+    CrudAlumnoComponent,
+    CrudAspectoComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +39,7 @@ import { ModuloDirectorComponent } from './components/modulo-director/modulo-dir
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [CRUDApagsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
